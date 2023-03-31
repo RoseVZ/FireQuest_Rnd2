@@ -97,9 +97,12 @@ export default function CustomizedTables() {
               </StyledTableCell>
               
             </StyledTableRow>
+
           ))}
         </TableBody>
       </Table>
+      
     </TableContainer>
+    
   );
 }
