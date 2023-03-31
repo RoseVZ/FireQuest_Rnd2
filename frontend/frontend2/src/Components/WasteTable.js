@@ -5,7 +5,8 @@ import RecyTable from './tables/RecyTable';
 function wasteTable() {
   return (
       <div>
-          <RecyTable/>
+          <RecyTable />
+          <div></div>
           <NonRecyc />
           
     </div>
