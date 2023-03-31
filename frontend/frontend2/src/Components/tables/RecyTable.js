@@ -7,6 +7,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import axios from 'axios';
+import { useState, useEffect } from "react";
+import { Button } from '@mui/material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -28,8 +31,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(Name,Type, ) {
-  return { name, calories, fat, carbs, protein };
+function createData(name,Tag,Weight,RecyclingCenters,CollectionPoint) {
+  return { name,Tag,Weight,RecyclingCenters,CollectionPoint};
 }
 
 const rows = [
@@ -41,28 +44,58 @@ const rows = [
 ];
 
 export default function CustomizedTables() {
+  const [data, setData] = useState([]);
+  const fetchData = async () => {
+    const response = await axios.get("http://127.0.0.1:8000/api/recyclableWaste");
+    const res = await response.data;
+    
+    setData(res);
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+
+  console.log(data)
+
+  const delete1 = (id) => {
+    console.log(id)
+    axios.delete(`http://localhost:8000/api/deleteWaste/${id}`);
+    window.location.reload(false);
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-            <StyledTableCell align="right">Calories</StyledTableCell>
-            <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
+            <StyledTableCell>Recyclable Wastes</StyledTableCell>
+            
+            <StyledTableCell align="right">Tag</StyledTableCell>
+            <StyledTableCell align="right">Weight&nbsp;(tonne)</StyledTableCell>
+            <StyledTableCell align="right">RecyclingCenters</StyledTableCell>
+            <StyledTableCell align="right">CollectionPoint</StyledTableCell>
+            <StyledTableCell align="right">Delete Data</StyledTableCell>
+            <StyledTableCell align="right">Update Data</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+          {data.map((row) => (
+            <StyledTableRow key={row.wstno}>
               <StyledTableCell component="th" scope="row">
-                {row.name}
+                {row.type}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
+              <StyledTableCell align="right">{row.Tag}</StyledTableCell>
+              <StyledTableCell align="right">{row.weight}</StyledTableCell>
+              <StyledTableCell align="right">{row.RecyclingCenters}</StyledTableCell>
+              <StyledTableCell align="right">{row.CollectionPoints}</StyledTableCell>
+              <StyledTableCell align="right">
+              <Button variant="outlined" color='error'onClick={() => delete1(row?.wstno)}>Delete</Button>
+              </StyledTableCell>
+              <StyledTableCell align="right">
+              <Button variant="outlined" >Edit Amount</Button>
+              </StyledTableCell>
+              
             </StyledTableRow>
           ))}
         </TableBody>
