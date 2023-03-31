@@ -14,6 +14,7 @@ export default function WasteTable() {
       <div>
           <RecyTable />
           <div>
+          <Divider sx={{ my: 1 }} />
           
           </div>
           <NonRecyc />

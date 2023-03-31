@@ -148,10 +148,10 @@ app.delete('/api/deleteRecyclableWaste', async (req, res) => {
 });
 
 // delete all non recyclables
-app.delete('/api/deleteRecyclableWaste', async (req, res) => {
+app.delete('/api/deleteNonRecyclableWaste', async (req, res) => {
   try {
     const wasteRef = db.collection('waste');
-    const snapshot = await wasteRef.where('recyclable', '==', true).get();
+    const snapshot = await wasteRef.where('recyclable', '==', false).get();
 
     snapshot.forEach((doc) => {
       doc.ref.delete();
