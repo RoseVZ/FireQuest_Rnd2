@@ -5,11 +5,11 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
-app.use(cors({ origin: 'http:localhost:3000' }));
+app.use(cors({ origin: 'http://localhost:3000' }));
 
-const cors=require('cors');
+// const cors=require('cors');
 
-app.use(cors({origin:'http://localhost:3000'}));
+// app.use(cors({origin:'http://localhost:3000'}));
 var admin = require('firebase-admin');
 
 var serviceAccount = require('./key.json');
@@ -129,6 +129,37 @@ app.post('/api/updateWaste', async (req, res) => {
     res.send(wasteDocRef);
   } catch (err) {
     res.send(err);
+  }
+});
+// delete all recyclables
+app.delete('/api/deleteRecyclableWaste', async (req, res) => {
+  try {
+    const wasteRef = db.collection('waste');
+    const snapshot = await wasteRef.where('recyclable', '==', true).get();
+
+    snapshot.forEach((doc) => {
+      doc.ref.delete();
+    });
+
+    res.status(200).send('Recyclable waste deleted successfully');
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+// delete all non recyclables
+app.delete('/api/deleteRecyclableWaste', async (req, res) => {
+  try {
+    const wasteRef = db.collection('waste');
+    const snapshot = await wasteRef.where('recyclable', '==', true).get();
+
+    snapshot.forEach((doc) => {
+      doc.ref.delete();
+    });
+
+    res.status(200).send('Recyclable waste deleted successfully');
+  } catch (error) {
+    res.status(500).send(error);
   }
 });
 

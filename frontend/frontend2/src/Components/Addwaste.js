@@ -13,57 +13,43 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Food Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 const theme = createTheme();
 
 export default function AddWaste() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { id } = useParams();
   const [formData, setFormData] = useState({
-    Name: "",
-    Username: "",
-    Mobile: "",
-    Addr: "",
-
+    type: "",
+    CollectionPoints: "",
+    RecyclingCenters: "",
+    Tag: "",
+    weight: 0,
+    wstno: "",
   });
 
-  const { Name, Username, Mobile, Addr } = formData;
+  const { type, CollectionPoints, RecyclingCenters, Tag, weight, wstno } =
+    formData;
 
   const onChange = (e) => {
     console.log("heloooo");
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const post_data = {
-      Addr: Addr,
-      User_Id: id,
-      Username: Username,
-      Mobile: Mobile,
-      Name: Name,
+      Tag: Tag,
+
+      CollectionPoints: CollectionPoints,
+      RecyclingCenters: RecyclingCenters,
+      type: type,
+      weight: weight,
+      recyclable: true,
+      
     };
-    axios.delete(`http://127.0.0.1:8000/deletedupprofile/${id}/`)
-    axios.post(`http://127.0.0.1:8000/postcprofile/${id}/`, post_data);
-    navigate(`/cprofile/${id}`)
-    
+
+     await axios.post(`http://localhost:8000/api/addWaste`, post_data);
+    navigate(`/display`);
   };
 
   return (
@@ -78,26 +64,23 @@ export default function AddWaste() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>F</Avatar>
           <Typography component="h1" variant="h5">
-            Fill in your profile details
+            Add a new waste
           </Typography>
           <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-             
               <Grid item xs={12}>
                 <TextField
                   margin="normal"
                   required
                   fullWidth
-                  id="Name"
-                  label="Name"
-                  name="Name"
-                  autoComplete="Name"
+                  id="type"
+                  label="type"
+                  name="type"
+                  autoComplete="type"
                   autoFocus
-                  onChange={e => onChange(e)}
-                  value={Name}
-                  type='Name'
+                  onChange={(e) => onChange(e)}
+                  value={type}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -105,14 +88,13 @@ export default function AddWaste() {
                   margin="normal"
                   required
                   fullWidth
-                  id="Username"
-                  label="Username"
-                  name="Username"
-                  autoComplete="Username"
+                  id="CollectionPoints"
+                  label="CollectionPoints"
+                  name="CollectionPoints"
+                  autoComplete="CollectionPoints"
                   autoFocus
-                  onChange={e => onChange(e)}
-                  value={Username}
-                  type='Username'
+                  onChange={(e) => onChange(e)}
+                  value={CollectionPoints}
                 />
               </Grid>
               {/* <Grid item xs={12} sm={6}>
@@ -137,33 +119,61 @@ export default function AddWaste() {
               </Grid> */}
               <Grid item xs={12}>
                 <TextField
-                   margin="normal"
-                   required
-                   fullWidth
-                   id="Mobile"
-                   label="Mobile"
-                   name="Mobile"
-                   autoComplete="Mobile"
-                   autoFocus
-                   onChange={e => onChange(e)}
-                   value={Mobile}
-                   type='Mobile'
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="Tag"
+                  label="Tag"
+                  name="Tag"
+                  autoComplete="Tag"
+                  autoFocus
+                  onChange={(e) => onChange(e)}
+                  value={Tag}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   multiline
-                   margin="normal"
-                   required
-                   fullWidth
-                   id="Addr"
-                   label="Address"
-                   name="Addr"
-                   autoComplete="Addr"
-                   autoFocus
-                   onChange={e => onChange(e)}
-                   value={Addr}
-                   type='Addr'
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="RecyclingCenters"
+                  label="RecyclingCenters"
+                  name="RecyclingCenters"
+                  autoComplete="RecyclingCenters"
+                  autoFocus
+                  onChange={(e) => onChange(e)}
+                  value={RecyclingCenters}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  multiline
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="weight"
+                  label="weight"
+                  name="weight"
+                  autoComplete="weight"
+                  autoFocus
+                  onChange={(e) => onChange(e)}
+                  value={weight}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  multiline
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="wstno"
+                  label="wstno"
+                  name="wstno"
+                  autoComplete="wstno"
+                  autoFocus
+                  onChange={(e) => onChange(e)}
+                  value={wstno}
                 />
               </Grid>
             </Grid>
@@ -179,7 +189,6 @@ export default function AddWaste() {
             <Grid container justifyContent="flex-end"></Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );
