@@ -32,7 +32,7 @@ export default function WasteTable() {
           <NonRecyc />
           <Button variant="contained" color='secondary' onClick={() => delete2()}>Send to Treatment Center</Button>
           <Divider sx={{ my: 1 }} />
-          <Button variant="contained" color='success' href='/addwaste'>Add Wastes</Button>
+          {/* <Button variant="contained" color='success' href='/addwaste'>Add Wastes</Button> */}
     </div>
   )
 }

@@ -76,7 +76,7 @@ export default function CustomizedTables() {
             <StyledTableCell align="right">RecyclingCenters</StyledTableCell>
             <StyledTableCell align="right">CollectionPoint</StyledTableCell>
             <StyledTableCell align="right">Delete Data</StyledTableCell>
-            <StyledTableCell align="right">Update Data</StyledTableCell>
+            {/* <StyledTableCell align="right">Update Data</StyledTableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -92,9 +92,9 @@ export default function CustomizedTables() {
               <StyledTableCell align="right">
               <Button variant="outlined" color='error'onClick={() => delete1(row?.wstno)}>Delete</Button>
               </StyledTableCell>
-              <StyledTableCell align="right">
+              {/* <StyledTableCell align="right">
               <Button variant="outlined" >Edit Amount</Button>
-              </StyledTableCell>
+              </StyledTableCell> */}
               
             </StyledTableRow>
 
