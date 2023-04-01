@@ -24,7 +24,9 @@ export default function WasteTable() {
   return (
       <div>
           <RecyTable />
-          <Button variant="contained" color='secondary'  onClick={() => delete1()} >Send to Recycler</Button>
+          <Button variant="contained" color='secondary' onClick={() => delete1()} >Send to Recycler</Button>
+          <Divider sx={{ my: 1 }} />
+          <Button variant="contained" color='success' href='/addwaste2'>Add Waste</Button>
           <div>
           <Divider sx={{ my: 1 }} />
           
@@ -32,7 +34,7 @@ export default function WasteTable() {
           <NonRecyc />
           <Button variant="contained" color='secondary' onClick={() => delete2()}>Send to Treatment Center</Button>
           <Divider sx={{ my: 1 }} />
-          {/* <Button variant="contained" color='success' href='/addwaste'>Add Wastes</Button> */}
+          <Button variant="contained" color='success' href='/addwaste'>Add Waste</Button>
     </div>
   )
 }

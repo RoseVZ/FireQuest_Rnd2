@@ -16,7 +16,7 @@ import MenuItem from "@mui/material/MenuItem";
 
 const theme = createTheme();
 
-export default function AddWaste() {
+export default function AddWaste2() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [formData, setFormData] = useState({
@@ -69,7 +69,7 @@ export default function AddWaste() {
       RecyclingCenters: RecyclingCenters,
       type: type,
       weight: Number(weight),
-      recyclable: false,
+      recyclable: true,
       wstno: wstno,
     };
 
